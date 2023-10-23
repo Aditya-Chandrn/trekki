@@ -1,6 +1,7 @@
 import express from "express";
 import { config } from "dotenv";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 
 import ConnectMongoDB from "./configs/db.js";
 import BlogRouter from "./routers/blogRouter.js";
@@ -12,15 +13,16 @@ app.use(cors({
     methods: ["POST", "GET"],
     credentials: true
 }));
-app.use(express.json());
+app.use(express.json({limit: "50mb"}));
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 //connect MongoDB
 ConnectMongoDB();
 
 //routes
 app.use("/api/blog", BlogRouter);
-app.use("/api/account/", AuthRouter);
+app.use("/api/account", AuthRouter);
 
 config();
 const PORT = process.env.PORT || 5000;

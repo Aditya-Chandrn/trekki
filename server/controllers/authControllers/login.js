@@ -15,8 +15,12 @@ const login = async (user) => {
         const existingUser = await User.findOne({ email: email });
         if (!existingUser) return { message: failMessage, success: false };
 
-        const passwordMatch = await bcrypt.compare(password, existingUser.password);
+        let passwordMatch;
+        passwordMatch = await bcrypt.compare(password, existingUser.password);
+        
         if (!passwordMatch) return { message: failMessage, success: false };
+
+        const userId = existingUser._id;
 
         const token = jwt.sign(
             { userId: userId },

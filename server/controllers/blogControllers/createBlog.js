@@ -2,11 +2,7 @@ import mongoose from "mongoose";
 import { Blog } from "../../models/blogModel.js";
 import { User } from "../../models/userModel.js";
 
-const createBlog = async (blogData) => {
-    const user = "banana";
-    const blogId = await getBlogId();
-    if (!blogId) return `Couldn't create blog`;
-
+const createBlog = async (blogData, userId) => {
     const currentDate = new Date();
     const createdDate = currentDate.toISOString().split("T")[0];
 
@@ -20,8 +16,7 @@ const createBlog = async (blogData) => {
     try {
         //create blog data
         const blog = new Blog({
-            blogId: blogId,
-            author: user,
+            author: userId,
             heading: blogData.heading,
             place: blogData.place,
             contents: blogData.contents,
@@ -29,39 +24,26 @@ const createBlog = async (blogData) => {
         });
 
         //save blog to database
-        await blog.save()
-            .then(() => {
-                console.log(`New blog with id ${blogId} added to database`);
-            })
-            .catch((error) => {
-                console.log(`Error adding blog ${blogId} to database \n ------ ERROR ----- \n ${error.message} \n ------------------`);
-            });
+        let blogId;
+        try {
+            const savedBlog = await blog.save()
+            blogId = savedBlog._id;
+            console.log(`New blog with id ${blogId} added to database`);
+        } catch (error) {
+            console.log(`Error adding blog ${blogId} to database \n ------ ERROR ----- \n ${error.message} \n ------------------`);
+        };
 
         //store blogId in user's blogs field
         await User.findOneAndUpdate(
-            { userId: user },
-            {$push: { "blogs": blogId }}
+            { _id: userId },
+            { $push: { "blogs": blogId } }
         )
-        .then(() => {
-            console.log(`Blog ${blogId} added to user ${user}`);
-        })
-        .catch((error) => {
-            console.log(`Error adding blog ${blogId} to user ${user} \n ------ ERROR ----- \n ${error.message} \n ------------------`);
-        });
-
-        //update blogId in AvailableId
-        const nextBlogId = "B-" + (parseInt(blogId.slice(2,), 16) + 1).toString(16).padStart(6, "0").toUpperCase();
-        const AvailableId = mongoose.connection.collection("AvailableId");
-        await AvailableId.updateOne(
-            {},
-            { $set: { "blogId": nextBlogId }}
-        )
-        .then(() => {
-            console.log(`Updated blogId in AvailableId`);
-        })
-        .catch((error) => {
-            console.log(`Couldn't update blogId in AvailableId collection \n ------ ERROR ----- \n ${error.message} \n ------------------`);
-        });
+            .then(() => {
+                console.log(`Blog ${blogId} added to user ${userId}`);
+            })
+            .catch((error) => {
+                console.log(`Error adding blog ${blogId} to user ${userId} \n ------ ERROR ----- \n ${error.message} \n ------------------`);
+            });
 
         //commit all changes on success
         await session.commitTransaction();
@@ -75,21 +57,6 @@ const createBlog = async (blogData) => {
         session.endSession();
         console.log(failMessage + `\n ------ ERROR ----- \n ${error.message} \n ------------------`);
         return failMessage;
-    }
-}
-
-const getBlogId = async () => {
-    try {
-        const AvailableId = mongoose.connection.collection("AvailableId");
-        const doc = await AvailableId.findOne({})
-
-        if (doc) {
-            const blogId = doc.blogId;
-            return blogId;
-        }
-        else console.log("---- Document not found ----");
-    } catch (error) {
-        console.log(`Couldn't retrieve document form AvailableId collection. \n ------ ERROR ----- \n ${error.message} \n ------------------`)
     }
 }
 

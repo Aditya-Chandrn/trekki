@@ -1,0 +1,10 @@
+.login{
+    width: 35vw;
+    margin: 0 auto;
+}
+
+.login-form{
+    display: flex;
+    flex-direction: column;
+    gap: 1vh;
+}

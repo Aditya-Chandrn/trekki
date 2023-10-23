@@ -1,0 +1,7 @@
+.content-manager{
+    position: absolute;
+    bottom: 0;
+    display: flex;
+    gap: 5vw;
+    width: 100vw;
+}
