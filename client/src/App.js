@@ -5,6 +5,8 @@ import Login from 'pages/login/Login';
 import Signup from 'pages/signup/Signup';
 import Home from 'pages/home/Home';
 import CreateBlog from 'pages/createBlog/CreateBlog';
+import Layout from "components/Layout";
+import Profile from "pages/profile/Profile";
 
 function App() {
 	return (
@@ -16,12 +18,13 @@ function App() {
 					<Route path='signup' element={<Signup/>}/>
 				</Route>
 				{/* ------- blog routes ------- */}
-				<Route path='/blog'>
+				<Route path='/blog' element={<Layout/>}>
 					<Route path='create' element={<CreateBlog/>}/>
 				</Route>
 				{/* ------- other routes ------- */}
-				<Route path='/'>
+				<Route path='/' element={<Layout/>}>
 					<Route index element={<Home/>}/>
+					<Route path="profile" element={<Profile/>}/>
 				</Route>
 			</Routes>
 		</div>

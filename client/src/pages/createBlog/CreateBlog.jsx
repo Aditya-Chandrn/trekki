@@ -104,16 +104,18 @@ const CreateBlog = () => {
 		setContents(allContents);
 	}
 
+	const getUser = async () => {
+        const url = "http://localhost:5000/api/account/checkLogged";
+        const response = await axios.get(url, {withCredentials: true});
+        if (response.data.success === false) {
+			console.log(response.data.message);
+			navigate("/account/login");
+		}
+    }  
+
 	//if not logged in, redirect to login page
 	useEffect(() => {
-		const url = "http://localhost:5000/api/account/checkLogged"
-		const response = axios.get(url, { withCredentials: true });
-		if (response.data.success === false) {
-			console.log(response.data.message);
-			setTimeout(() => {
-				navigate("/account/login");
-			}, 1000);
-		}
+		getUser();
 	}, [])
 
 	return (

@@ -1,5 +1,6 @@
 import {Router} from "express";
 import jwt from "jsonwebtoken";
+import { config } from "dotenv";
 
 import createBlog from "../controllers/blogControllers/createBlog.js";
 
@@ -11,6 +12,7 @@ router.post("/create", async (req,res) => {
     let userId;
     if(token){
         try{
+            config();
             const decodedToken = jwt.verify(token, process.env.TOKEN_KEY);
             userId = decodedToken.userId;
         } catch (error) {

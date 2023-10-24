@@ -1,0 +1,18 @@
+.navbar{
+    display: flex;
+}
+
+.user{
+    border: 1px solid;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.dropdown{
+    display: flex;
+    flex-direction: column;
+    z-index: 100;
+    position: absolute;
+    top: 100%;
+}

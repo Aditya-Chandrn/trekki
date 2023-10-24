@@ -1,0 +1,12 @@
+.profile{
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    width: 35vw;
+}
+
+.profile-form{
+    display: flex;
+    flex-direction: column;
+    gap: 1vh;
+}
