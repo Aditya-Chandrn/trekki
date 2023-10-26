@@ -19,7 +19,7 @@ const userSchema = new Schema({
         type: String,
         required: true,
     },
-    imageUrl: [Number],
+    imageUrl: String,
     blogs: {
         type: [String],
         default: []

@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import { Blog } from "../../models/blogModel.js";
 import { User } from "../../models/userModel.js";
+import storeImage from "../../middlewares/storeImage.js";
 
 const createBlog = async (blogData, userId) => {
     const currentDate = new Date();
@@ -15,22 +16,35 @@ const createBlog = async (blogData, userId) => {
 
     try {
         //create blog data
+        let editedContents = [] 
         const blog = new Blog({
             author: userId,
             heading: blogData.heading,
             place: blogData.place,
-            contents: blogData.contents,
             createdDate: createdDate
         });
+        
+        const blogId = blog._id;
+        
+        //store images in firebase and store their path
+        editedContents = await Promise.all(blogData.contents.map(async(content, index) => {
+            if(content.isText === true){
+                return content;
+            }
+            else {
+                const imageUrl = await storeImage(content.image, blogId, index);
+                return {isText : false, image : imageUrl};
+            }
+        }));
+        blog.contents = editedContents;
 
         //save blog to database
-        let blogId;
         try {
-            const savedBlog = await blog.save()
-            blogId = savedBlog._id;
+            await blog.save()
             console.log(`New blog with id ${blogId} added to database`);
         } catch (error) {
             console.log(`Error adding blog ${blogId} to database \n ------ ERROR ----- \n ${error.message} \n ------------------`);
+            return({message : "Error creating blog", success: false});
         };
 
         //store blogId in user's blogs field
@@ -49,14 +63,14 @@ const createBlog = async (blogData, userId) => {
         await session.commitTransaction();
         session.endSession();
         console.log("---------------------------------------------------");
-        return successMessage;
+        return {message : successMessage, success: true};
     }
     catch (error) {
         //reset all changes on failure
         await session.abortTransaction();
         session.endSession();
         console.log(failMessage + `\n ------ ERROR ----- \n ${error.message} \n ------------------`);
-        return failMessage;
+        return {message : failMessage, success: false};
     }
 }
 

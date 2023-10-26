@@ -20,14 +20,14 @@ const CreateBlog = () => {
 			let reader = new FileReader();
 
 			reader.onload = (e) => {
-				const buffer = new Uint8Array(e.target.result);
+				const buffer = e.target.result;
 				resolve(buffer);
 			};
 			reader.onerror = (error) => {
 				reject(error);
 			}
 
-			reader.readAsArrayBuffer(image);
+			reader.readAsDataURL(image);
 		});
 	}
 
@@ -42,12 +42,10 @@ const CreateBlog = () => {
 				filteredContents.push(content);
 			}
 			else if (!content.isText && content.image !== undefined) {
-				const imageBuffer = Array.from(await convertToBuffer(content.image));
-				filteredContents.push({ isText: false, image: imageBuffer });
+				const base64Image = await convertToBuffer(content.image);
+				filteredContents.push({ isText: false, image: base64Image });
 			}
 		}));
-
-		console.log(filteredContents);
 
 		const blogData = {
 			heading: heading,
@@ -64,7 +62,7 @@ const CreateBlog = () => {
 				},
 				withCredentials: true
 			});
-			console.log(response.data);
+			console.log(response.data.message);
 		} catch (error) {
 			console.error("Error creating blog. \nERROR", error.message);
 		}

@@ -6,6 +6,10 @@ const commentSchema = new Schema({
         unique: true,
         required: true
     },
+    content: {
+        type: String,
+        required: true
+    },
     blog: {
         type: String,
         ref: "Blog.blogId"
@@ -14,8 +18,14 @@ const commentSchema = new Schema({
         type: String,
         ref: "User.userId"
     }, 
-    likes: true,
-    dislikes: true,
+    likes: {
+        type: Number, 
+        default: 0
+    },
+    dislikes: {
+        type: Number, 
+        default: 0
+    },
     replies: {
         type: String, 
         ref: "Comment.commentId"

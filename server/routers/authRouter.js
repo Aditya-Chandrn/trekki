@@ -62,4 +62,13 @@ router.get("/logout", (req, res) => {
     res.send({ message: "Logged out successfully." });
 });
 
+import multer from "multer";
+const upload = multer();
+
+router.post("/banana", upload.single("image"), (req,res) => {
+    console.log("here");
+    console.log(req.file);
+    res.send("yo");
+})
+
 export default router;

@@ -8,7 +8,7 @@ const contentSchema = new Schema({
         }
     },
     image: {
-        type: [Number],
+        type: String,
         required: function(){
             return this.isText === false;
         }
@@ -17,7 +17,7 @@ const contentSchema = new Schema({
         type: Boolean,
         require: true
     }
-});
+}, {_id: false});
 
 const blogSchema = new Schema({
     heading: {
