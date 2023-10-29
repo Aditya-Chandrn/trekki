@@ -1,7 +1,6 @@
 import {storageBucket} from "../configs/fireStorageConfig.js";
 
-const storeImage = async (image, blogId, index) => {
-    const fileName = `blogImages/${blogId}/content${index}.image`;
+const storeImage = async (image, fileName) => {
     const file = storageBucket.file(fileName);
 
     const writeStream = file.createWriteStream({

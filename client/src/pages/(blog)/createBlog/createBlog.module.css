@@ -1,4 +1,43 @@
 .create-blog{
+    height: 80vh;
+    overflow-x: hidden;
+    display: flex;
+    justify-content: center;
+    padding-bottom: 2.5vh;
+    box-sizing: border-box;
+}
+
+.blog-form{
     position: relative;
-    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 3vh 0;
+    width: 60vw;
+    height: fit-content;
+    gap: 2vh;
+}
+
+.heading{
+    width: inherit;
+    font-weight: bold;
+    font-size: 1.7rem;
+    padding: 1vh;
+    overflow-y: hidden;
+}
+
+.place{
+    font-size: 1.1rem;
+    height: 5vh;
+    font-weight: bold;
+    width: 20vw;
+}
+
+.create{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding: 1vh 3vw;
+    font-size: 1rem;
+    background-color: var(--green);
+    color: var(--white);
 }

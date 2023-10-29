@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from "./signup.module.css";
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Signup = () => {
 	const [email, setEmail] = useState("");
@@ -48,14 +48,31 @@ const Signup = () => {
 
 	return (
 		<div className={styles["signup"]}>
-			<form className={styles["signup-form"]} onSubmit={submitNewUser}>
-				Fname <input type='text' value={fname} onChange={e => setFname(e.target.value)}/>
-				Lname <input type='text' value={lname} onChange={e => setLname(e.target.value)}/>
-				Email <input type='text' value={email} onChange={e => setEmail(e.target.value)}/>
-				Password <input type='text' value={password} onChange={e => setPassword(e.target.value)}/>
-				Confirm Password <input type='text' value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)}/>
-				<button type='submit'>Submit</button>
+			<div className={styles["heading"]}>Signup</div>
+			<form id="signup" className={styles["signup-form"]} onSubmit={submitNewUser}>
+				<div className={styles["input-div"]}>	
+					Fname 
+					<input className={styles["input"]} type='text' value={fname} onChange={e => setFname(e.target.value)}/>
+				</div>
+				<div className={styles["input-div"]}>	
+					Lname 
+					<input className={styles["input"]} type='text' value={lname} onChange={e => setLname(e.target.value)}/>
+				</div>
+				<div className={styles["input-div"]}>	
+					Email 
+					<input className={styles["input"]} type='text' value={email} onChange={e => setEmail(e.target.value)}/>
+				</div>
+				<div className={styles["input-div"]}>	
+					Password 
+					<input className={styles["input"]} type='text' value={password} onChange={e => setPassword(e.target.value)}/>
+				</div>
+				<div className={styles["input-div"]}>	
+					Confirm Password 
+					<input className={styles["input"]} type='text' value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)}/>
+				</div>
 			</form>
+			<button form="signup" className={styles["button"]} type='submit'>Submit</button>
+			<Link className={styles["redirect"]} to="/account/login">Already have an account?</Link>
     </div>
 	)
 }

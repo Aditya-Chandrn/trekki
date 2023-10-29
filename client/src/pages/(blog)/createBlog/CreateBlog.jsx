@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import styles from "./createBlog.module.css";
 import BlogCreation from "components/blogCreation/blogCreation";
@@ -111,6 +111,14 @@ const CreateBlog = () => {
 		}
     }  
 
+	const textAreaRef = useRef(null);
+
+    useEffect(() => {
+        if (textAreaRef.current) {
+        textAreaRef.current.style.height = 'auto';
+        textAreaRef.current.style.height = `${textAreaRef.current.scrollHeight}px`;
+        }
+    }, [heading]);
 	//if not logged in, redirect to login page
 	useEffect(() => {
 		getUser();
@@ -118,16 +126,19 @@ const CreateBlog = () => {
 
 	return (
 		<div className={styles["create-blog"]}>
-			<form className={styles["blog-form"]} onSubmit={submitBlog}>
-				Heading <textarea
+			<form id="create-blog" className={styles["blog-form"]} onSubmit={submitBlog}>
+				<textarea
 					className={styles["heading"]}
+					ref={textAreaRef}
 					value={heading}
+					placeholder="Title"
 					onChange={e => setHeading(e.target.value)}
 				/>
-				Place <input
+				<input
 					className={styles["place"]}
 					type="text"
 					value={place}
+					placeholder="Place"
 					onChange={e => setPlace(e.target.value)}
 				/>
 				<BlogCreation
@@ -137,7 +148,7 @@ const CreateBlog = () => {
 					createNewContent={createNewContent}
 					handleChange={handleChange}
 				/>
-				<button type="submit">Create</button>
+			<button id="create-blog" className={styles["create"]} type="submit">Create</button>
 			</form>
 			{contents.length !== 0 ?
 				<ContentManager

@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import styles from "./login.module.css";
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+
+import LoginPreview from "assets/auth/login.jpg";
 
 const Login = () => {
 	const [email, setEmail] = useState("");
@@ -36,11 +38,19 @@ const Login = () => {
 
 	return (
 		<div className={styles["login"]}>
-			<form className={styles["login-form"]} onSubmit={submitUserLogin}>
-				Email <input type='text' value={email} onChange={e => setEmail(e.target.value)}/>
-				Password <input type='text' value={password} onChange={e => setPassword(e.target.value)}/>
-				<button type='submit'>Login</button>
+			<div className={styles["heading"]}>Login</div>
+			<form id="login" className={styles["login-form"]} onSubmit={submitUserLogin}>
+				<div className={styles["input-div"]}>	
+					Email 
+					<input className={styles["input"]} type='text' value={email} onChange={e => setEmail(e.target.value)}/>
+				</div>
+				<div className={styles["input-div"]}>	
+					Password 
+					<input className={styles["input"]} type='text' value={password} onChange={e => setPassword(e.target.value)}/>
+				</div>
 			</form>
+			<button form="login" className={styles["button"]} type='submit'>Login</button>
+			<Link className={styles["redirect"]} to="/account/signup">Create new account</Link>
 		</div>
 	)
 }

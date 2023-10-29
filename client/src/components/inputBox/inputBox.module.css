@@ -1,4 +1,31 @@
-.image{
-    height: 10vh;
+.text-input{
+    overflow-y: hidden;
+    min-height: 10vh;
+    width: 60vw;
+}
+
+.image-input{
+    position: relative;
+    min-height: 10vh;
+    width: 60vw;
+    border: 1px solid var(--grey);
+    border-radius: 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.image-input:focus{
+    border: 1px solid var(--green);
+}
+
+.image-exists{
     aspect-ratio: auto;
+    width: 60vw;
+}
+
+.remove{
+    position: absolute;
+    top: 0;
+    right: 0;
 }

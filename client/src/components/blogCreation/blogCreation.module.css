@@ -1,0 +1,23 @@
+.blog-creation{
+    display: flex;
+    flex-direction: column;
+    gap: 2vh;
+    margin-bottom: 2.5vh;
+    margin-top: 2.5vh;
+    box-sizing: border-box;
+    padding: 2.5vh 0;
+    border-top: 1px solid black;
+}
+
+.add-buttons{
+    display: flex;
+    margin: 0 auto;
+    gap: 2vw;
+}
+
+.add{
+    color: var(--green);
+    border: 1px solid var(--green);
+    padding: 2vh 3vw;
+
+}

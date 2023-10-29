@@ -2,6 +2,16 @@
     position: absolute;
     bottom: 0;
     display: flex;
+    justify-content: center;
     gap: 5vw;
     width: 100vw;
+    height: 10vh;
+    align-items: center;
+    border-top: 1px solid var(--grey);
+    background-color: var(--white);
+}
+
+.contents-option{
+    font-family: "Urbanist";
+    font-size: 1.5rem;
 }

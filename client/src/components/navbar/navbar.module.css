@@ -1,18 +1,73 @@
 .navbar{
+    position: relative;
     display: flex;
+    height: 10vh;
+    width: 100vw;
+    box-sizing: border-box;
+    padding: 1vh 3vw;
+    background-color: var(--green);
+    align-items: center;
+    color: var(--white);
+    font-size: 1rem;
 }
 
 .user{
-    border: 1px solid;
     display: flex;
     flex-direction: column;
     position: relative;
 }
 
+.profile{
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    gap: 1vw;
+    font-size: 1.2rem;
+}
+
+.user-image{
+    border-radius: 50%;
+    height: 5vh;
+    aspect-ratio: 1;
+    object-fit: cover;
+}
+
+.default-user{
+    filter: invert(100);
+    border-radius: 50%;
+    height: 5vh;
+    aspect-ratio: 1;
+    object-fit: cover;
+}
+
 .dropdown{
+    background-color: var(--white);
     display: flex;
     flex-direction: column;
     z-index: 100;
     position: absolute;
     top: 100%;
+    right: 0;
+    border-radius: 3px;
+    border: 1px solid black;
+}
+
+.dropdown-option{
+    padding: 2vh 2vw;
+    font-size: 1.2rem;
+    color: black;
+}
+
+.navbar-options{
+    position: absolute;
+    left: 40vw;
+    display: flex;
+    width: 20vw;
+    justify-content: space-between;
+    justify-self: center;
+}
+
+.login-button{
+    position: absolute;
+    right: 5vw;
 }

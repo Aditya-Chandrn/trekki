@@ -3,27 +3,28 @@ import styles from "./contentManager.module.css";
 
 const ContentManager = ({index, removeContent, createNewContent}) => {
     const options = [{
-            label: "Remove",
-            function: () => removeContent(index)
-        }, {
-            label: "Add Text Above",
+            label: "📝↑",
             function: () => createNewContent(true, index, 0)
         }, {
-            label: "Add Text Below",
+            label: "📝↓",
             function: () => createNewContent(true, index, 1)
         },{
-            label: "Add Image Above",
+            label: "🖼️↑",
             function: () => createNewContent(false, index, 0)
         },{
-            label: "Add Image Below",
+            label: "🖼️↓",
             function: () => createNewContent(false, index, 1)
-        }
+        }, {
+            label: "❌",
+            function: () => removeContent(index)
+        } 
     ];
 
     return(
-        <div className={styles["content-managaer"]}>
+        <div className={styles["content-manager"]}>
             {options.map((option, index) => 
                 <button 
+                    className={styles["contents-option"]}
                     key={index} 
                     onClick={option.function}
                 >

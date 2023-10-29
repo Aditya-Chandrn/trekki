@@ -9,6 +9,7 @@ const ViewBlog = () => {
     const [metaData, setMetaData] = useState();
     const [contents, setContents] = useState();
 
+    //get blog data
     const getBlogData = async() => {
         const url = `http://localhost:5000/api/blog/fetchBlog/${blogId}`;
         const response = await axios.get(url);
@@ -16,6 +17,7 @@ const ViewBlog = () => {
         console.log(response.data.message);
         if(response.data.success === false) return;
         
+        //separate content from blogData
         let blogData = response.data.blogData;
         blogData.contents.forEach((content) => {
             if(!content.isText) {

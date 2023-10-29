@@ -1,30 +1,40 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import styles from "./inputBox.module.css";
 
 const TextInput = ({text, handleChange, index}) => {
+    const textAreaRef = useRef(null);
+
+    useEffect(() => {
+        if (textAreaRef.current) {
+        textAreaRef.current.style.height = 'auto';
+        textAreaRef.current.style.height = `${textAreaRef.current.scrollHeight}px`;
+        }
+    }, [text]);
+
     return(
-        <div className={styles["text-input"]}>
-            <textarea 
-                className={styles["textarea"]}
-                value={text}
-                onChange={e => handleChange(e.target.value, index)}   
-            />
-        </div>
+        <textarea 
+            className={styles["text-input"]}
+            ref={textAreaRef}
+            value={text}
+            placeholder="Write your story"
+            onChange={e => handleChange(e.target.value, index)}   
+        />
     );
 };
 
 const ImageInput = ({image, handleChange, index}) => {
+    const imageClass = image ? "image-exists" : "no-image";
     return(
-        <div className={styles["image-input"]}>
-            click
+        <div tabIndex="0" className={styles["image-input"]}>
             {image?
                 <>
                     <img 
-                        className={styles["image"]}
+                        className={styles[imageClass]}
+                        accept=".jpg .jpgeg .png .avif .gif"
                         src={URL.createObjectURL(image)}
                         alt="content"
                     />
-                    <button onClick={() => handleChange(undefined, index)}>Remove</button>    
+                    <button className={styles["remove"]} onClick={() => handleChange(undefined, index)}>❌</button>    
                 </>
                 :
                 <input

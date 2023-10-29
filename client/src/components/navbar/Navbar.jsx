@@ -3,6 +3,8 @@ import styles from "./navbar.module.css";
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
+import DefaultUser from "assets/default_user.png";
+
 const UserButton = ({userData, setIsLogged}) => {
     const [image, setImage] = useState();
     const [clicked, setClicked] = useState(false);
@@ -10,6 +12,7 @@ const UserButton = ({userData, setIsLogged}) => {
 
     const navigate = useNavigate();
 
+    //logout
     const logout = async () => {
         const url = "http://localhost:5000/api/account/logout";
         const response = await axios.get(url, {withCredentials: true});
@@ -21,12 +24,6 @@ const UserButton = ({userData, setIsLogged}) => {
         }, 1000);
     }
 
-    const convertBufferToImage = () => {
-        const buffer = new Uint8Array(userData.image);
-        const blob = new Blob([buffer], {type: "image/jpeg"});
-        setImage(URL.createObjectURL(blob));
-    }
-
     const handleOutsideClick = (e) => {
         if(buttonRef.current && !buttonRef.current.contains(e.target)){
             setClicked(false);
@@ -34,7 +31,7 @@ const UserButton = ({userData, setIsLogged}) => {
     }
 
     useEffect(() => {
-        convertBufferToImage();
+        userData.image && setImage(`data:img/jpeg;base64,${userData.image}`);
         document.addEventListener("click", handleOutsideClick);
         return () => {
             document.removeEventListener("click", handleOutsideClick);
@@ -43,15 +40,18 @@ const UserButton = ({userData, setIsLogged}) => {
 
     return(
         <div className={styles["user"]}>
-            <button onClick={() => setClicked(!clicked)} ref={buttonRef}>
-                <img className={styles["user-image"]} src={image} alt={userData.email}/>
+            <button className={styles["profile"]} onClick={() => setClicked(!clicked)} ref={buttonRef}>
+                {userData.fname} 
+                <img 
+                    className={styles[image? "user-image" : "default-user"]} 
+                    src={image ? image : DefaultUser} 
+                    alt={userData.email}
+                /> 
             </button>
             {clicked ?
                 <div className={styles["dropdown"]}>
-                    <button>
-                        <Link to="/profile">Profile</Link>
-                    </button>
-                    <button onClick={() => logout()}>
+                    <Link className={styles["dropdown-option"]} to="/profile">Profile</Link>
+                    <button className={styles["dropdown-option"]} onClick={() => logout()}>
                         Logout
                     </button>
                 </div>
@@ -81,13 +81,18 @@ const Navbar = () => {
 
     return (
         <div className={styles["navbar"]}>
-            <Link to="/">Stories</Link>
-            <Link to="/blog/create">Write Blog</Link>
-            {isLogged? 
-                <UserButton userData = {user} setIsLogged={setIsLogged}/>
-                :
-                <Link to="/account/login">Login</Link>
-            }
+            <div className={styles["navbar-options"]}>
+                <Link to="/">Stories</Link>
+                <Link to="/blog/search">Search</Link>
+                <Link to="/blog/create">Write Blog</Link>
+            </div>
+            <div className={styles["login-button"]}>
+                {isLogged? 
+                    <UserButton userData = {user} setIsLogged={setIsLogged}/>
+                    :
+                    <Link to="/account/login">Login</Link>
+                }
+            </div>
             
     </div>
     )

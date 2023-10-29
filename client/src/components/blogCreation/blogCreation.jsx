@@ -5,7 +5,7 @@ import styles from "./blogCreation.module.css";
 
 const BlogCreation = ({setCurrentContent, contents, handleChange, createNewContent}) => {
 	return (
-		<div>
+		<div className={styles["blog-creation"]}>
 			{contents.map((content, index) => 
 				<div 
                     key={index}
@@ -31,8 +31,9 @@ const BlogCreation = ({setCurrentContent, contents, handleChange, createNewConte
 			)}
 
             {contents.length === 0 ? 
-               <>
+               <div className={styles["add-buttons"]}>
                     <button 
+                        className={styles["add"]}
                         onClick={() => {
                             createNewContent(true, 0, 0);
                             setCurrentContent(0);
@@ -41,6 +42,7 @@ const BlogCreation = ({setCurrentContent, contents, handleChange, createNewConte
                     Add Text
                     </button>
                     <button 
+                        className={styles["add"]}
                         onClick={() => {
                             createNewContent(false, 0, 0);
                             setCurrentContent(0);
@@ -48,7 +50,7 @@ const BlogCreation = ({setCurrentContent, contents, handleChange, createNewConte
                     >
                     Add Image
                     </button>
-                </> 
+                </div> 
                 :
                 null
             }

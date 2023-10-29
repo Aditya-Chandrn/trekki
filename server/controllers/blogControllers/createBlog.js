@@ -32,7 +32,8 @@ const createBlog = async (blogData, userId) => {
                 return content;
             }
             else {
-                const imageUrl = await storeImage(content.image, blogId, index);
+                const fileName = `blogImages/${blogId}/content${index}.image`;
+                const imageUrl = await storeImage(content.image, fileName);
                 return {isText : false, image : imageUrl};
             }
         }));
