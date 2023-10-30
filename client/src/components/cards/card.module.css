@@ -1,0 +1,21 @@
+.image{
+    /* height: 88vh; */
+    width:18vw;
+    /* margin-left: 10vw; */
+    /* margin: 5vh; */
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: 2vw;
+    transition-duration: 0.5s;
+    /* margin-right: 2vw; */
+}
+
+.tile{
+    padding-left: 2vw;
+    padding-right: 2vw;
+}
+
+.image:hover{
+    width: 18.5vw;
+    transition-duration: 0.5s;
+}
