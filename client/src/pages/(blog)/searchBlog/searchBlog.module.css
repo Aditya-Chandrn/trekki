@@ -8,3 +8,39 @@
     border: 1px solid;
     width: 40vw;
 }
+
+.flex{
+    display: flex;
+}
+
+.nav{
+    width: 20vw;
+    height: 88vh;
+    text-align: center;
+    padding-top: 2vh;
+    font-size: 3vh;
+    margin-right: 3vw;
+    border-right: 1px solid var(--grey);
+}
+
+input{
+    border-radius: 10px;
+    font-size: 2.5vh;
+    margin: 1vh;
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+.search{
+    border: 1px solid black;
+    font-size: 5vh;
+    margin: 2vh;
+    background-color: white;
+}
+
+.search:hover{
+    cursor: pointer;
+    background-color: lightgreen;
+}
+
+.search:
